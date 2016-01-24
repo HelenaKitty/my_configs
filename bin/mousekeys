@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+if [ "$(xkbset q|grep "Mouse-Keys = "|cut -d\  -f3)" = "Off" ]; then
+
+	xkbset m ma 60 10 10 5 2
+
+	xkbset exp =m
+
+
+else
+
+
+	xkbset -m
+
+
+fi
