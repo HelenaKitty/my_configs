@@ -1,0 +1,14 @@
+#!/bin/bash
+
+user=$1
+pkg=$2
+prefix="/var/jail"
+dir=$prefix/$user/
+conf="/tmp/jail.conf"
+
+echo ̈́"Generating jail configuration '$conf'"
+echo -e "chroot='$dir'\ncleanJailFirst=0\ntestCommandsInsideJail=['$pkg']\nprocPath='/proc'" > $conf
+echo -e "Attempting to copy '$pkg' to $dir\nThis may take a while, please wait!"
+makejail $conf > /var/log/jail.log
+echo ̈́"Removing jail configuration '$conf'"
+rm $conf

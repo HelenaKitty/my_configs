@@ -1,0 +1,38 @@
+#!/bin/bash
+
+user=$1
+passwd=$2
+accgrp="access"
+limgrp="limit"
+prefix="/var/jail"
+dir=$prefix/$user/
+gensum=$(mkpasswd -m sha-512 $passwd)
+conf="/tmp/jail.conf"
+
+echo "Attempting to generate SHA-512 hash from passwd and adding user '$user'"
+useradd -p "$gensum" $user
+echo "Attempting to create user jail directory '$dir'"
+mkdir $dir
+echo ̈́"Generating jail configuration '$conf'"
+echo -e "chroot='$dir'\ncleanJailFirst=1\ntestCommandsInsideJail=['rbash','busybox']\nprocPath='/proc'" > $conf
+echo -e "Attempting to copy rbash and busybox to $dir\nThis may take a while, please wait!"
+makejail $conf > /var/log/jail.log
+echo ̈́"Removing jail configuration '$conf'"
+rm $conf
+echo "Attempting to create directory ̈́'$prefix/$user/usr/bin/'"
+mkdir $prefix/$user/usr/bin
+echo "Attempting to create directory '$prefix/$user/usr/sbin/'"
+mkdir $prefix/$user/usr/sbin
+echo "Attempting to create symbolic links for busybox within the chroot jail"
+chroot $dir /bin/busybox --install -s
+echo "Attempting to create directory '$prefix/$user/home/'"
+mkdir $prefix/$user/home/
+echo "Attempting to create directory '$prefix/$user/home/$user/'"
+mkdir $prefix/$user/home/$user/
+echo "Attempting to change ownership on directory '$prefix/$user/home/$user/' to '$user'"
+chown $user $prefix/$user/home/$user/
+echo "Updating SSHd configuration '/etc/ssh/sshd_config'"
+echo "User '$user' needs resource limits, attempting to add user to group '$limgrp'"
+adduser -q $user $limgrp
+echo "User '$user' is ready to SSH in, attempting to add user to group '$accgrp'"
+adduser -q $user $accgrp
