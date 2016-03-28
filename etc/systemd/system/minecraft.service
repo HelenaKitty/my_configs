@@ -1,0 +1,12 @@
+[Service]
+Type=simple
+User=mc
+Group=mc
+WorkingDirectory=/opt/minecraft
+ExecStart=/opt/minecraft/start-minecraft
+
+# Timeout for start up/shut down
+TimeoutSec=300
+
+[Install]
+WantedBy=graphical.target
