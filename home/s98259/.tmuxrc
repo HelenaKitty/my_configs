@@ -1,0 +1,18 @@
+tmux new -s default
+tmux neww -n main cava
+tmux selectp -t 0
+tmux splitw -v -p 76 "mosh s98259@felicia.eboo.guru"
+tmux selectp -t 0
+tmux splitw -h -p 30 ncmpcpp
+tmux selectp -t 2
+tmux splitw -h -p 34 ~/bin/logo
+tmux splitw -v -p 65 nrss
+tmux splitw -v -p 52 htop
+tmux selectp -t 2
+tmux neww -n mon "mosh s98259@ve01.kaffesolutions.uk"
+tmux splitw -h "mosh s98259@ns1.kaffesolutions.uk"
+tmux splitw -v "mosh s98259@ns2.kaffesolutions.uk"
+tmux splitw -v "mosh s98259@kitty.my-own.chat"
+tmux splitw -h "mosh s98259@bunny.my-own.chat"
+tmux selectp -t 0
+tmux splitw -v
