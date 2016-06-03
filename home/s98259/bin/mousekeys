@@ -1,17 +1,42 @@
 #!/bin/bash
 
+delay=60
+interval=10
+time_to_max=50
+max_speed=10
+curve=2
+check_if="Off"
 
-if [ "$(xkbset q|grep "Mouse-Keys = "|cut -d\  -f3)" = "Off" ]; then
+while getopts ":s:m:n:a:t" opt; do
+	case $opt in
+	s)
+		xkbset q|grep "Mouse-Keys = "|cut -d\  -f3
+		;;
+	m)
+		max_speed=$OPTARG
+		;;
+	n)	time_to_max=$OPTARG
+		;;
+	a)
+		if [[ "$OPTARG" == "1" ]]; then
+			xkbset m ma $delay $interval $time_to_max $max_speed $curve
+			xkbset exp =m
+		elif [[ "$OPTARG" == "0" ]]; then
+			xkbset -m
+		fi
+		;;
 
-	xkbset m ma 60 10 10 5 2
+	t)
+		if [ "$(xkbset q|grep "Mouse-Keys = "|cut -d\  -f3)" = "$check_if" ]; then
+			xkbset m ma $delay $interval $time_to_max $max_speed $curve
+			xkbset exp =m
+		else
+			xkbset -m
+		fi
+		;;
 
-	xkbset exp =m
-
-
-else
-
-
-	xkbset -m
-
-
-fi
+	\?)
+      		echo "Invalid option: -$OPTARG" >&2
+      		;;
+  	esac
+done
