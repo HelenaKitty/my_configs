@@ -4,7 +4,8 @@ set $bg feh --bg-scale
 set $lock xtrlock
 set $locktime 1 			# Whole figure parsed in minutes
 set $lockmsg This system is locked!
-set $term xterm -e tmux attach -t default
+set $term terminator
+#set $term xterm -e tmux attach -t default
 #set $term xterm && transset -a $opacity
 #set $opacity 0.8
 set $scrn scrot
