@@ -14,6 +14,7 @@
 [profiles]
   [[default]]
     background_image = None
+    background_type = transparent
     cursor_color = "#ff0000"
     font = Monospace 8
     foreground_color = "#00ff00"
