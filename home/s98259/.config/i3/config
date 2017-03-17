@@ -23,13 +23,13 @@ assign [class="Iceweasel|Chromium|Surf"] 2
 new_window none
 
 # Auto execution of programs
-exec xset -dpms
-exec xset s 0 0
-exec xset s off
-exec xset led on 
+# exec xset -dpms
+# exec xset s 0 0
+# exec xset s off
+# exec xset led on 
 # exec xkbcomp ~/Kaffe-Dvorak $DISPLAY > /dev/null 2>&1
 # exec xkbset a
-# exec xkbset m ma 60 10 10 5 2
+exec xkbset ma 60 10 10 5 2
 # exec xkbset =m
 exec xcompmgr
 exec feh $bg $firstbg
